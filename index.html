@@ -1,73 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>St Joseph's ERP - Premium</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St Joseph's Sahibganj - Mega ERP All Features</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>body{background:#d8e3f3;font-family:Arial}</style>
-</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:Outfit;background:#eef2ff}.glass{background:rgba(255,255,255,0.9);backdrop-filter:blur(10px)}.grad{background:linear-gradient(135deg,#0f172a,#1e3a8a)}</style></head>
 <body>
-<div class="bg-[#0b2447] text-yellow-300 p-3 m-2 rounded-xl flex justify-between items-center border border-yellow-500">
-<b>👑 St Joseph's School Sahibganj | ERP v2.1 - Anil Hansda 8210654916</b>
-<span>🔔 ERP ⚙️</span>
+<div id="login" class="min-h-screen flex items-center justify-center p-4">
+<div class="max-w-5xl w-full grid md:grid-cols-2 gap-0 rounded-[2rem] overflow-hidden shadow-2xl">
+<div class="grad p-8 text-white"><h1 class="text-4xl font-extrabold">St Joseph's<br><span class="text-yellow-400">Sahibganj</span><br>Mega ERP</h1>
+<p class="text-blue-200 mt-2 text-sm">All School Features + Principal All Reports Access</p>
+<div class="mt-6 space-y-2 text-sm">
+<div class="bg-white/10 p-3 rounded-xl">👑 Principal: Full Reports + All Access (Only Login, No Signup)</div>
+<div class="bg-white/10 p-3 rounded-xl">📚 20+ Modules: Admission, Fees, Attendance, Timetable, Exams, Library, Transport, Hostel, Payroll, Inventory, Notices, Gallery, ID Card, Receipt, etc.</div>
+<div class="bg-white/10 p-3 rounded-xl">📞 Anil Hansda 8210654916</div>
+</div></div>
+<div class="bg-white p-8">
+<h2 class="text-2xl font-bold">Principal Secure Login</h2><p class="text-xs text-slate-500">Only Login Allowed - No Create Account</p>
+<input id="u" value="principal" class="w-full border p-3 rounded-xl mt-4" placeholder="Username">
+<input id="p" type="password" value="admin123" class="w-full border p-3 rounded-xl mt-2" placeholder="Password">
+<div class="bg-yellow-100 border border-yellow-400 p-2 rounded-xl text-xs mt-3">🔒 Principal: <b>principal / admin123</b><br>Teacher: teacher5 / teach123 | Student: student1 / stud123 | Accountant: accountant / acc123</div>
+<div class="grid grid-cols-2 gap-2 mt-3">
+<button onclick="setR('principal')" class="bg-slate-900 text-white p-2 rounded-xl text-xs">👑 Principal</button>
+<button onclick="setR('teacher')" class="bg-slate-100 p-2 rounded-xl text-xs">Teacher</button>
+<button onclick="setR('student')" class="bg-slate-100 p-2 rounded-xl text-xs">Student</button>
+<button onclick="setR('accountant')" class="bg-slate-100 p-2 rounded-xl text-xs">Accountant</button>
 </div>
+<button onclick="login()" class="w-full grad text-white p-3 rounded-xl font-bold mt-4">Login to Mega Dashboard 🚀</button>
+</div></div></div>
 
-<div class="flex gap-2 px-2 mb-2 overflow-auto">
-<button onclick="s('r')" class="bg-yellow-400 px-4 py-2 rounded-full font-bold">Role Panel</button>
-<button onclick="s('f')" class="bg-white px-4 py-2 rounded-full font-bold">Fee Tracking</button>
-<button onclick="s('e')" class="bg-white px-4 py-2 rounded-full font-bold">Expense Dashboard</button>
-<button onclick="s('a')" class="bg-white px-4 py-2 rounded-full font-bold">GPS Attendance</button>
-<button onclick="s('h')" class="bg-white px-4 py-2 rounded-full font-bold">Homework</button>
+<div id="app" class="hidden">
+<div class="grad text-white p-3 flex justify-between sticky top-0 z-50"><div class="flex gap-2 items-center"><div class="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center text-slate-900 font-bold">SJ</div><b>Mega ERP v4.0</b><span id="rb" class="text-xs bg-white/20 px-2 py-1 rounded-full ml-2">Principal - All Reports</span></div><div class="flex gap-2"><span id="un" class="text-xs bg-white/20 px-2 py-1 rounded-full">principal</span><button onclick="location.reload()" class="bg-red-500 px-3 py-1 rounded-full text-xs">Logout</button></div></div>
+<div class="flex">
+<div class="w-[260px] bg-white min-h-screen p-2 space-y-1 hidden md:block overflow-auto h-[calc(100vh-50px)] sticky top-[50px]">
+<button onclick="tab('dash')" id="b-dash" class="w-full text-left p-2 rounded-xl bg-slate-900 text-white text-sm">📊 Principal Dashboard - All Reports</button>
+<button onclick="tab('admission')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📝 Admission</button>
+<button onclick="tab('students')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">🎓 Students + Excel + ID Card</button>
+<button onclick="tab('teachers')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">👨‍🏫 Teachers + Payroll</button>
+<button onclick="tab('fees')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">💰 Fees + Receipt PDF</button>
+<button onclick="tab('attendance')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📍 Attendance GPS</button>
+<button onclick="tab('timetable')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">🕒 Timetable</button>
+<button onclick="tab('homework')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📚 Homework</button>
+<button onclick="tab('exams')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📝 Exams + Report Card</button>
+<button onclick="tab('library')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📖 Library</button>
+<button onclick="tab('transport')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">🚌 Transport</button>
+<button onclick="tab('hostel')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">🏠 Hostel</button>
+<button onclick="tab('inventory')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📦 Inventory</button>
+<button onclick="tab('expenses')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📈 Expenses + P/L</button>
+<button onclick="tab('notices')" class="w-full text-left p-2 rounded-xl hover:bg-slate-100 text-sm">📢 Notices + Gallery</button>
+<button onclick="tab('reports')" id="b-reports" class="w-full text-left p-2 rounded-xl bg-yellow-100 border border-yellow-400 text-sm font-bold">👑 Principal - All Reports</button>
 </div>
+<div class="flex-1 p-3">
+<div id="dash" class="space-y-3">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="glass rounded-2xl p-4"><div class="text-xs">Total Students</div><b class="text-2xl" id="cStud">0</b></div>
+<div class="glass rounded-2xl p-4"><div class="text-xs">Fees Collected</div><b class="text-2xl">₹2.4L</b><div class="text-xs">76.9%</div></div>
+<div class="glass rounded-2xl p-4"><div class="text-xs">Expenses</div><b class="text-2xl">₹1.5L</b></div>
+<div class="glass rounded-2xl p-4 bg-green-50 border border-green-300"><div class="text-xs">Net Profit (Principal)</div><b class="text-2xl text-green-700">₹90K</b></div>
+</div>
+<div class="grid md:grid-cols-2 gap-3">
+<div class="glass rounded-2xl p-4"><h3 class="font-bold">👑 Principal Can See All Reports</h3>
+<div class="grid grid-cols-2 gap-2 mt-3 text-xs">
+<div class="bg-white p-2 rounded-xl border">💰 Fees: ₹2,40,000 Collected<br>Pending ₹12,000</div>
+<div class="bg-white p-2 rounded-xl border">👨‍🏫 Salary: ₹1,20,000 Paid</div>
+<div class="bg-white p-2 rounded-xl border">📍 Attendance: 92% Present</div>
+<div class="bg-white p-2 rounded-xl border">📝 Results: Avg 78%</div>
+<div class="bg-white p-2 rounded-xl border">🚌 Transport: 3 Buses • 120 Stud</div>
+<div class="bg-white p-2 rounded-xl border">📖 Library: 120 Books Issued</div>
+<div class="bg-white p-2 rounded-xl border">🏠 Hostel: 30 Stud • 85%</div>
+<div class="bg-white p-2 rounded-xl border">📦 Inventory: ₹2L Value</div>
+</div></div>
+<div class="glass rounded-2xl p-4"><h3 class="font-bold">Quick Actions</h3>
+<div class="space-y-2 mt-3 text-sm">
+<button onclick="tab('admission')" class="w-full bg-slate-900 text-white p-2 rounded-xl">+ New Admission</button>
+<button onclick="tab('students')" class="w-full bg-yellow-400 p-2 rounded-xl font-bold">🎫 Generate ID Cards PDF</button>
+<button onclick="tab('fees')" class="w-full bg-green-600 text-white p-2 rounded-xl">🧾 Fee Receipt PDF</button>
+<button onclick="tab('exams')" class="w-full bg-blue-600 text-white p-2 rounded-xl">📝 Report Card PDF</button>
+<button onclick="tab('reports')" class="w-full bg-yellow-100 border border-yellow-400 p-2 rounded-xl font-bold">👑 View All Reports</button>
+</div></div>
+</div></div>
 
-<!-- ROLE -->
-<div id="r" class="p-2">
-<h1 class="text-3xl font-bold text-center text-[#0b2447]">Who Can Add Students?</h1>
-<p class="text-center text-yellow-700 font-bold">Role Permissions — Who Can Add What in School ERP</p>
-<div class="grid md:grid-cols-3 gap-3 mt-3">
-<div class="bg-white rounded-xl p-4 border-2 border-yellow-400 shadow"><b>👑 Principal - Full Access • Crown</b><br><br>✅ Can Add Teachers<br>✅ Add All Classes Students<br>✅ Remove Anyone<br><div class="bg-yellow-100 mt-2 p-2 text-xs rounded">Full control over all roles & data</div></div>
-<div class="bg-white rounded-xl p-4 border-2 border-blue-900 shadow"><b>👨‍🏫 Class Teacher (Class 5) - Limited Access</b><br><br>✅ Can Add Only Class 5 Students (52)<br>✅ Can Add Attendance<br>❌ Cannot Add Other Class<br>❌ Cannot Remove Teacher</div>
-<div class="bg-white rounded-xl p-4 border-2 border-blue-900 shadow"><b>📄 Accountant - View Only</b><br><br>❌ Cannot Add Students<br>❌ Cannot Add/Remove Roles<br>✅ Only View Fees<br><div class="bg-blue-100 mt-2 p-2 text-xs rounded">View fees records only, no edit access</div></div>
-</div>
-<div class="bg-white rounded-xl p-3 mt-3"><h2 class="font-bold text-center">Workflow Flow: How Student Data Gets Added</h2><div class="flex justify-center gap-2 mt-2 text-xs"><span class="bg-[#0b2447] text-white p-2 rounded">Principal Adds Teacher</span> → <span class="bg-blue-800 text-white p-2 rounded">Class Teacher Adds Class</span> → <span class="bg-slate-400 text-white p-2 rounded">Accountant Views Fees</span></div></div>
-</div>
-
-<!-- FEE -->
-<div id="f" class="hidden p-2">
-<div class="bg-[#1e3a8a] text-white p-3 rounded-t-xl flex justify-between"><b>🧮 Accountant Portal - Fee Tracking System</b><span>Anil Hansda</span></div>
-<div class="bg-white p-3 rounded-b-xl">
-<h1 class="text-xl font-bold">Accountant - Class-wise Fee Paid/Pending + Payment Date</h1>
-<p class="text-sm">Track and manage student fee payments with automated UPI verification</p>
-<div class="flex gap-2 mt-3"><select class="border p-2 rounded"><option>Class 5</option><option>Nursery</option></select><select class="border p-2 rounded"><option>September 2024</option></select><button class="bg-blue-800 text-white px-3 rounded">Export CSV</button></div>
-<table class="w-full text-sm mt-3 border"><tr class="bg-gray-200"><th class="p-2">Student Name</th><th>Amount</th><th>Status</th><th>Date</th></tr><tr><td class="p-2">Aarav Kumar</td><td>₹1,000</td><td class="text-green-600">Paid</td><td>05-Sept-2024</td></tr><tr class="bg-red-50"><td class="p-2">Ananya Singh</td><td>₹1,000</td><td class="text-red-600">Pending</td><td>—</td></tr></table>
-<div class="grid grid-cols-3 gap-2 mt-3 text-center"><div class="border p-2">Paid 40/52</div><div class="border p-2">Pending 12/52</div><div class="border p-2">76.9% Collection</div></div>
-</div>
-</div>
-
-<!-- EXPENSE -->
-<div id="e" class="hidden p-2">
-<div class="bg-slate-800 text-white p-3 rounded-t-xl"><b>🧮 Accountant • Expenses + Profit/Loss Dashboard - Live • Data synced Sep 2024</b></div>
-<div class="bg-[#e8eef8] p-3 grid md:grid-cols-4 gap-3 rounded-b-xl">
-<div class="bg-white p-3 rounded-xl"><b>Add Expense +</b><select class="border w-full p-2 rounded mt-2"><option>Teacher Salary</option><option>Electricity</option><option>Maintenance</option></select><input value="15000" class="border w-full p-2 rounded mt-2"><button class="bg-[#0b5f7a] text-white w-full mt-2 p-2 rounded">+ Add Expense</button></div>
-<div class="md:col-span-3 grid grid-cols-3 gap-2"><div class="bg-green-100 p-3 rounded-xl"><div class="text-sm">Total Collection Sept</div><b class="text-xl">₹ 2,40,000</b></div><div class="bg-red-200 p-3 rounded-xl"><div class="text-sm">Total Expense Sept 2024</div><b class="text-xl">₹ 1,50,000</b></div><div class="bg-blue-200 p-3 rounded-xl"><div class="text-sm">Net Profit Sept 2024</div><b class="text-xl">₹ 90,000</b></div><div class="md:col-span-3 bg-white p-2 rounded-xl mt-2"><table class="w-full text-xs"><tr class="bg-gray-200"><th>Date</th><th>Category</th><th>Amount</th><th>Status</th></tr><tr><td>05-Sep-2024</td><td>⚡ Electricity</td><td>₹ 8,000</td><td>Paid</td></tr><tr><td>01-Sep-2024</td><td>🎓 Teacher Salary</td><td>₹ 1,20,000</td><td>Paid</td></tr></table></div></div>
-</div>
-</div>
-
-<!-- GPS -->
-<div id="a" class="hidden p-2">
-<div class="bg-blue-800 text-white p-3 rounded-full text-center font-bold">📍 Teacher Attendance - Only Inside School Campus - GPS + Geo-Fence 100m</div>
-<div class="grid md:grid-cols-2 gap-3 mt-3"><div class="bg-white p-3 rounded-xl"><b>School Campus - Geo-Fence Map</b><div class="bg-blue-100 h-64 rounded mt-2 flex items-center justify-center">🗺️ St Joseph's Campus - 100m Radius<br>Teacher Inside - 20m</div><div class="mt-2 border p-2 rounded">✅ Sunil Soren - Present • Inside Campus • 09:14 AM</div></div><div><div class="bg-green-500 text-white p-3 rounded-xl">✅ Inside Campus - Mark Attendance Allowed<br><button class="bg-green-700 w-full mt-2 p-2 rounded">Mark Attendance ✓</button></div><div class="bg-red-600 text-white p-3 rounded-xl mt-3">⚠️ Outside Campus - Cannot Mark Attendance - 450m away</div></div></div>
-</div>
-
-<!-- HOMEWORK -->
-<div id="h" class="hidden p-2">
-<div class="bg-[#0b2447] text-white p-3 rounded-xl flex justify-between"><b>🎓 EduPortal</b><span>Teacher Mode</span></div>
-<div class="grid md:grid-cols-2 gap-3 mt-3"><div class="bg-white p-3 rounded-xl"><b>Teacher Panel — Class 5 Upload Homework</b><select class="border w-full p-2 rounded mt-2"><option>Math</option></select><input value="Fractions" class="border w-full p-2 rounded mt-2"><input type="file" class="mt-2"><button class="bg-blue-800 text-white w-full mt-2 p-2 rounded">Upload Homework</button><div class="bg-yellow-100 p-2 mt-2 text-sm">✅ New HW Uploaded for Class 5 - 52 Students Notified</div></div><div class="bg-white p-3 rounded-xl"><b>Student Login View Class 5</b><div class="bg-blue-200 p-2 rounded mt-2"><b>Student: Aarav Kumar - Class 5</b></div><div class="bg-white border p-2 rounded mt-2"><b>Math Homework • Fractions</b><br><span class="text-xs bg-yellow-100 px-2">Due Tomorrow • 2024-10-10</span><p class="text-xs mt-2">Complete Exercise 5.2 — Q1 to Q10 on Fractions.</p><button class="bg-blue-800 text-white text-xs px-3 py-1 rounded mt-2">Download Homework PDF</button></div></div></div>
-</div>
-
+<div id="admission" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold text-xl">📝 Admission</h2><div class="grid md:grid-cols-3 gap-2 mt-3"><input id="adName" placeholder="Student Name" class="border p-2 rounded-xl"><input id="adClass" value="Class 5" class="border p-2 rounded-xl"><input id="adPhone" placeholder="Parent Phone" class="border p-2 rounded-xl"></div><button onclick="admit()" class="bg-slate-900 text-white px-4 py-2 rounded-xl mt-3">+ Admit</button><div id="adList" class="mt-3 bg-white rounded-xl p-2 text-sm"></div></div></div>
+<div id="students" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">🎓 Students + Excel + ID Card</h2><div class="flex flex-wrap gap-2 mt-2"><select id="cs" class="border p-2 rounded-xl"><option>Class 5</option><option>Nursery</option></select><input type="file" id="exFile" accept=".xlsx,.xls" class="text-xs"><button onclick="upExcel()" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs">Upload Excel</button><button onclick="samExcel()" class="border px-3 py-2 rounded-xl text-xs">Sample</button><button onclick="idAll()" class="bg-yellow-400 px-3 py-2 rounded-xl text-xs font-bold">All ID Cards PDF</button></div><div class="flex gap-2 mt-2"><input id="sN" placeholder="Name" class="border p-2 rounded-xl"><input id="sR" placeholder="Roll" class="border p-2 rounded-xl"><button onclick="addS()" class="bg-blue-600 text-white px-3 rounded-xl">+ Add</button></div><div class="bg-white rounded-xl mt-3 overflow-auto"><table class="w-full text-xs"><thead class="bg-slate-100"><tr><th class="p-2 text-left">ID</th><th>Name</th><th>Class</th><th>Roll</th><th>Fees</th><th>Action</th></tr></thead><tbody id="sBody"></tbody></table></div></div></div>
+<div id="fees" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">💰 Fees + Receipt</h2><div class="grid md:grid-cols-4 gap-2 mt-3"><select id="fSt" class="border p-2 rounded-xl"></select><input id="fAmt" value="1000" class="border p-2 rounded-xl"><select id="fStat" class="border p-2 rounded-xl"><option>Paid</option><option>Pending</option></select><button onclick="fAdd()" class="bg-green-600 text-white p-2 rounded-xl">Mark Paid + PDF</button></div><div class="bg-white rounded-xl mt-3 overflow-auto"><table class="w-full text-xs"><thead class="bg-slate-100"><tr><th class="p-2 text-left">Student</th><th>Amount</th><th>Status</th><th>Date</th><th>Receipt</th></tr></thead><tbody id="fBody"></tbody></table></div></div></div>
+<div id="teachers" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">👨‍🏫 Teachers + Payroll</h2><div class="flex gap-2 mt-2"><input id="tN" placeholder="Teacher Name" class="border p-2 rounded-xl"><input id="tS" placeholder="Subject" class="border p-2 rounded-xl"><select id="tC" class="border p-2 rounded-xl"><option>Class 5</option><option>Class 6</option></select><button onclick="aT()" class="bg-blue-600 text-white px-3 rounded-xl">+ Add (Principal Only)</button></div><div id="tL" class="mt-3 bg-white rounded-xl p-2 text-sm"></div></div></div>
+<div id="attendance" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">📍 Attendance GPS</h2><div class="grid md:grid-cols-2 gap-3 mt-3"><div class="bg-white p-3 rounded-xl"><button onclick="getLoc()" class="bg-blue-600 text-white px-3 py-2 rounded-xl text-xs">📍 Get Location 100m</button><div id="loc" class="text-xs mt-2"></div><div class="mt-3"><select id="aSt" class="border w-full p-2 rounded-xl"></select><div class="flex gap-2 mt-2"><button onclick="markA('Present')" class="bg-green-600 text-white px-3 py-1 rounded-xl text-xs">Present</button><button onclick="markA('Absent')" class="bg-red-600 text-white px-3 py-1 rounded-xl text-xs">Absent</button></div></div></div><div class="bg-white p-3 rounded-xl"><b>Today Attendance</b><div id="aL" class="text-xs mt-2"></div><button onclick="markT()" class="w-full bg-green-600 text-white p-2 rounded-xl mt-3">Teacher Mark ✓</button></div></div></div></div>
+<div id="timetable" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">🕒 Timetable</h2><div class="bg-white rounded-xl p-2 mt-2 overflow-auto"><table class="w-full text-xs"><tr class="bg-slate-100"><th class="p-2">Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr><tr><td class="p-2">09-10</td><td>Math</td><td>Science</td><td>English</td><td>Math</td><td>SST</td></tr></table></div></div></div>
+<div id="homework" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">📚 Homework</h2><div class="grid md:grid-cols-2 gap-3 mt-3"><div class="bg-white p-3 rounded-xl"><b>Upload HW</b><select class="border w-full p-2 rounded-xl mt-2"><option>Class 5</option></select><input placeholder="Chapter" class="border w-full p-2 rounded-xl mt-2"><button onclick="alert('HW Uploaded - 52 Notified')" class="w-full bg-blue-800 text-white p-2 rounded-xl mt-2">Upload</button></div><div class="bg-white p-3 rounded-xl"><b>Student View</b><div class="border p-2 rounded-xl mt-2 text-xs">Math • Fractions • Due Tomorrow<br><button class="bg-slate-900 text-white px-2 py-1 rounded mt-1">Download PDF</button></div></div></div></div></div>
+<div id="exams" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">📝 Exams + Report Card PDF</h2><div class="flex gap-2 mt-2"><select id="eSt" class="border p-2 rounded-xl"></select><input id="eSub" placeholder="Math: 85" class="border p-2 rounded-xl"><button onclick="addMark()" class="bg-blue-600 text-white px-3 rounded-xl">Add Marks</button><button onclick="repPDF()" class="bg-yellow-400 px-3 rounded-xl font-bold">Report Card PDF</button></div><div id="eL" class="mt-3 bg-white rounded-xl p-2 text-xs"></div></div></div>
+<div id="library" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">📖 Library</h2><div class="flex gap-2 mt-2"><input id="bName" placeholder="Book Title" class="border p-2 rounded-xl"><select id="bSt" class="border p-2 rounded-xl"></select><button onclick="issueBook()" class="bg-blue-600 text-white px-3 rounded-xl">Issue</button></div><div id="bL" class="mt-3 bg-white rounded-xl p-2 text-xs"></div></div></div>
+<div id="transport" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">🚌 Transport</h2><div class="grid md:grid-cols-3 gap-2 mt-2"><div class="bg-white p-3 rounded-xl border"><b>Bus 1 - Sahibganj</b><br>40 Students</div><div class="bg-white p-3 rounded-xl border"><b>Bus 2 - Borio</b><br>35 Students</div><div class="bg-white p-3 rounded-xl border"><b>Bus 3 - Rajmahal</b><br>45 Students</div></div></div></div>
+<div id="hostel" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">🏠 Hostel</h2><div class="bg-white p-3 rounded-xl mt-2 text-sm">30 Students • 85% Occupancy • ₹2000/month</div></div></div>
+<div id="inventory" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">📦 Inventory</h2><div class="bg-white p-2 rounded-xl mt-2 text-xs"><table class="w-full"><tr class="bg-slate-100"><th class="p-2 text-left">Item</th><th>Qty</th><th>Status</th></tr><tr><td class="p-2">Chairs 100</td><td>100</td><td>OK</td></tr><tr><td class="p-2">Lab Equip</td><td>20</td><td class="text-red-600">Low</td></tr></table></div></div></div>
+<div id="expenses" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">📈 Expenses + P/L</h2><div class="grid md:grid-cols-3 gap-3 mt-3"><div class="bg-green-100 p-3 rounded-xl"><div class="text-xs">Collection</div><b class="text-xl">₹2.4L</b></div><div class="bg-red-100 p-3 rounded-xl"><div class="text-xs">Expense</div><b class="text-xl">₹1.5L</b></div><div class="bg-blue-100 p-3 rounded-xl"><div class="text-xs">Profit</div><b class="text-xl">₹90K</b></div></div></div></div>
+<div id="notices" class="hidden"><div class="glass rounded-2xl p-4"><h2 class="font-bold">📢 Notices + Gallery</h2><div class="flex gap-2 mt-2"><input id="nTxt" placeholder="Enter Notice" class="border w-full p-2 rounded-xl"><button onclick="addN()" class="bg-blue-600 text-white px-3 rounded-xl">Publish</button></div><div id="nL" class="mt-3 space-y-2"><div class="bg-yellow-50 border p-2 rounded-xl text-sm">📅 10 Oct: Science Exhibition</div></div></div></div>
+<div id="reports" class="hidden"><div class="glass rounded-2xl p-4 border-2 border-yellow-400"><h2 class="font-bold text-xl">👑 Principal - All Reports Private</h2><div class="grid md:grid-cols-2 gap-3 mt-3">
+<div class="bg-white p-3 rounded-xl"><b>💰 Financial</b><div class="text-xs mt-1">Collection ₹2.4L<br>Expense ₹1.5L<br>Profit ₹90k<br><button onclick="pdfReport('Financial')" class="bg-slate-900 text-white px-2 py-1 rounded-xl text-xs mt-2">Download PDF</button></div></div>
+<div class="bg-white p-3 rounded-xl"><b>📊 Academic</b><div class="text-xs mt-1">Students <span id="rStud">0</span><br>Teachers 5<br>Attendance 92%<br><button onclick="pdfReport('Academic')" class="bg-blue-600 text-white px-2 py-1 rounded-xl text-xs mt-2">Download PDF</button></div></div>
+</div></div></div>
+</div></div></div></div>
 <script>
-function s(id){['r','f','e','a','h'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
-</script>
-<div class="bg-[#0b2447] text-yellow-200 text-center text-xs p-3 mt-4">© 2024 • Anil Hansda • 8210654916 • St Joseph's School Sahibganj • ERP v2.1</div>
-</body>
-</html>
+let role='principal';
+let studs=JSON.parse(localStorage.getItem('mega_stud')||'[]'); if(studs.length==0) studs=[{id:1,name:'Aarav Kumar',class:'Class 5',roll:'07',fees:'Paid'},{id:2,name:'Ananya Singh',class:'Class 5',roll:'12',fees:'Pending'}];
+let fees=JSON.parse(localStorage.getItem('mega_fees')||'[]'); let teachs=JSON.parse(localStorage.getItem('mega_teach')||'[]'); let atts=JSON.parse(localStorage.getItem('mega_att')||'[]'); let admissions=JSON.parse(localStorage.getItem('mega_adm')||'[]'); let marks=JSON.parse(localStorage.getItem('mega_marks')||'[]'); let books=JSON.parse(localStorage.getItem('mega_books')||'[]');
+function setR(r){role=r; document.getElementById('u').value=r=='principal'?'principal':r=='teacher'?'teacher5':r=='student'?'student1':'accountant'; document.getElementById('p').value=r=='principal'?'admin123':r=='teacher'?'teach123':r=='student'?'stud123':'acc123';}
+function login(){let u=document.getElementById('u').value,p=document.getElementById('p').value;let ok=(role=='principal'&&u=='principal'&&p=='admin123')||(role=='teacher'&&u=='teacher5'&&p=='teach123')||(role=='student'&&u=='student1'&&p=='stud123')||(role=='accountant'&&u=='accountant'&&p=='acc123');if(!ok){alert('Invalid!');return;}document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');document.getElementById('rb').innerText=role=='principal'?'👑 Principal • All Reports Access':role;document.getElementById('un').innerText=u;if(role!='principal'){document.getElementById('b-reports').style.display='none';}tab('dash');render();}
+function tab(id){['dash','admission','students','teachers','fees','attendance','timetable','homework','exams','library','transport','hostel','inventory','expenses','notices','reports'].forEach(x=>{let e=document.getElementById(x);if(e)e.classList.add('hidden');});document.getElementById(id).classList.remove('hidden');}
+function render(){document.getElementById('cStud').innerText=studs.length;document.getElementById('rStud').innerText=studs.length;document.getElementById('sBody').innerHTML=studs.map(s=>`<tr class='border-b'><td class='p-2'>${s.id}</td><td class='p-2 font-bold'>${s.name}</td><td class='p-2'>${s.class}</td><td class='p-2'>${s.roll}</td><td class='p-2 ${s.fees=='Paid'?'text-green-600':'text-red-600'}'>${s.fees}</td><td class='p-2 flex gap-1'><button onclick="idCard('${s.name}','${s.class}','${s.id}')" class='bg-yellow-400 text-[10px] px-2 py-1 rounded'>ID</button><button onclick="delS(${s.id})" class='bg-red-100 text-[10px] px-2 py-1 rounded'>Del</button></td></tr>`).join('');document.getElementById('fSt').innerHTML=studs.map(s=>`<option>${s.name}</option>`).join('');document.getElementById('aSt').innerHTML=studs.map(s=>`<option>${s.name}</option>`).join('');document.getElementById('eSt').innerHTML=studs.map(s=>`<option>${s.name}</option>`).join('');document.getElementById('bSt').innerHTML=studs.map(s=>`<option>${s.name}</option>`).join('');document.getElementById('fBody').innerHTML=fees.map(f=>`<tr class='border-b'><td class='p-2'
