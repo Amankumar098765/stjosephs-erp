@@ -2,141 +2,72 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>St Joseph's Sahibganj - ERP</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<title>St Joseph's ERP - Premium</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>body{background:#d8e3f3;font-family:Arial}</style>
 </head>
-<body class="bg-gray-50">
-<!-- LOGIN PAGE -->
-<div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-blue-600 p-4">
-<div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
-<h1 class="text-2xl font-bold text-center">St Joseph's ERP</h1><p class="text-center text-gray-500 mb-6">Sahibganj</p>
-<input id="username" placeholder="Username - AnilHansda123" class="w-full p-3 border rounded-lg mb-3">
-<input id="password" type="password" placeholder="Password - AnilHansda123" class="w-full p-3 border rounded-lg mb-4">
-<button onclick="login()" class="w-full bg-blue-700 text-white p-3 rounded-lg font-bold">Login</button>
-<p class="text-xs mt-4 text-gray-400">Principal: AnilHansda123 / AnilHansda123<br>Teacher: teacher1 / 123 (Class 5 only)<br>Accountant: accountant / 123</p>
+<body>
+<div class="bg-[#0b2447] text-yellow-300 p-3 m-2 rounded-xl flex justify-between items-center border border-yellow-500">
+<b>👑 St Joseph's School Sahibganj | ERP v2.1 - Anil Hansda 8210654916</b>
+<span>🔔 ERP ⚙️</span>
+</div>
+
+<div class="flex gap-2 px-2 mb-2 overflow-auto">
+<button onclick="s('r')" class="bg-yellow-400 px-4 py-2 rounded-full font-bold">Role Panel</button>
+<button onclick="s('f')" class="bg-white px-4 py-2 rounded-full font-bold">Fee Tracking</button>
+<button onclick="s('e')" class="bg-white px-4 py-2 rounded-full font-bold">Expense Dashboard</button>
+<button onclick="s('a')" class="bg-white px-4 py-2 rounded-full font-bold">GPS Attendance</button>
+<button onclick="s('h')" class="bg-white px-4 py-2 rounded-full font-bold">Homework</button>
+</div>
+
+<!-- ROLE -->
+<div id="r" class="p-2">
+<h1 class="text-3xl font-bold text-center text-[#0b2447]">Who Can Add Students?</h1>
+<p class="text-center text-yellow-700 font-bold">Role Permissions — Who Can Add What in School ERP</p>
+<div class="grid md:grid-cols-3 gap-3 mt-3">
+<div class="bg-white rounded-xl p-4 border-2 border-yellow-400 shadow"><b>👑 Principal - Full Access • Crown</b><br><br>✅ Can Add Teachers<br>✅ Add All Classes Students<br>✅ Remove Anyone<br><div class="bg-yellow-100 mt-2 p-2 text-xs rounded">Full control over all roles & data</div></div>
+<div class="bg-white rounded-xl p-4 border-2 border-blue-900 shadow"><b>👨‍🏫 Class Teacher (Class 5) - Limited Access</b><br><br>✅ Can Add Only Class 5 Students (52)<br>✅ Can Add Attendance<br>❌ Cannot Add Other Class<br>❌ Cannot Remove Teacher</div>
+<div class="bg-white rounded-xl p-4 border-2 border-blue-900 shadow"><b>📄 Accountant - View Only</b><br><br>❌ Cannot Add Students<br>❌ Cannot Add/Remove Roles<br>✅ Only View Fees<br><div class="bg-blue-100 mt-2 p-2 text-xs rounded">View fees records only, no edit access</div></div>
+</div>
+<div class="bg-white rounded-xl p-3 mt-3"><h2 class="font-bold text-center">Workflow Flow: How Student Data Gets Added</h2><div class="flex justify-center gap-2 mt-2 text-xs"><span class="bg-[#0b2447] text-white p-2 rounded">Principal Adds Teacher</span> → <span class="bg-blue-800 text-white p-2 rounded">Class Teacher Adds Class</span> → <span class="bg-slate-400 text-white p-2 rounded">Accountant Views Fees</span></div></div>
+</div>
+
+<!-- FEE -->
+<div id="f" class="hidden p-2">
+<div class="bg-[#1e3a8a] text-white p-3 rounded-t-xl flex justify-between"><b>🧮 Accountant Portal - Fee Tracking System</b><span>Anil Hansda</span></div>
+<div class="bg-white p-3 rounded-b-xl">
+<h1 class="text-xl font-bold">Accountant - Class-wise Fee Paid/Pending + Payment Date</h1>
+<p class="text-sm">Track and manage student fee payments with automated UPI verification</p>
+<div class="flex gap-2 mt-3"><select class="border p-2 rounded"><option>Class 5</option><option>Nursery</option></select><select class="border p-2 rounded"><option>September 2024</option></select><button class="bg-blue-800 text-white px-3 rounded">Export CSV</button></div>
+<table class="w-full text-sm mt-3 border"><tr class="bg-gray-200"><th class="p-2">Student Name</th><th>Amount</th><th>Status</th><th>Date</th></tr><tr><td class="p-2">Aarav Kumar</td><td>₹1,000</td><td class="text-green-600">Paid</td><td>05-Sept-2024</td></tr><tr class="bg-red-50"><td class="p-2">Ananya Singh</td><td>₹1,000</td><td class="text-red-600">Pending</td><td>—</td></tr></table>
+<div class="grid grid-cols-3 gap-2 mt-3 text-center"><div class="border p-2">Paid 40/52</div><div class="border p-2">Pending 12/52</div><div class="border p-2">76.9% Collection</div></div>
 </div>
 </div>
 
-<!-- MAIN ERP -->
-<div id="mainPage" class="hidden">
-<header class="bg-blue-900 text-white p-4 flex justify-between"><h1 class="font-bold">St Joseph's ERP - Sahibganj</h1><button onclick="logout()" class="bg-red-500 px-3 py-1 rounded">Logout</button></header>
-<div class="flex">
-<!-- Sidebar -->
-<div class="w-64 bg-white h-screen shadow p-4 space-y-2">
-<button onclick="show('dashboard')" class="w-full text-left p-2 bg-blue-100 rounded">📊 Dashboard</button>
-<button onclick="show('students')" class="w-full text-left p-2 hover:bg-gray-100 rounded">👨‍🎓 Students</button>
-<button onclick="show('teachers')" class="w-full text-left p-2 hover:bg-gray-100 rounded">👩‍🏫 Teachers</button>
-<button onclick="show('fees')" class="w-full text-left p-2 hover:bg-gray-100 rounded">💰 Fees + Expenses</button>
-<button onclick="show('homework')" class="w-full text-left p-2 hover:bg-gray-100 rounded">📚 Homework</button>
-<button onclick="show('attendance')" class="w-full text-left p-2 hover:bg-gray-100 rounded">📅 Attendance</button>
-<button id="adminOnly" onclick="show('accountant')" class="w-full text-left p-2 hover:bg-gray-100 rounded">🧾 Accountant Panel</button>
+<!-- EXPENSE -->
+<div id="e" class="hidden p-2">
+<div class="bg-slate-800 text-white p-3 rounded-t-xl"><b>🧮 Accountant • Expenses + Profit/Loss Dashboard - Live • Data synced Sep 2024</b></div>
+<div class="bg-[#e8eef8] p-3 grid md:grid-cols-4 gap-3 rounded-b-xl">
+<div class="bg-white p-3 rounded-xl"><b>Add Expense +</b><select class="border w-full p-2 rounded mt-2"><option>Teacher Salary</option><option>Electricity</option><option>Maintenance</option></select><input value="15000" class="border w-full p-2 rounded mt-2"><button class="bg-[#0b5f7a] text-white w-full mt-2 p-2 rounded">+ Add Expense</button></div>
+<div class="md:col-span-3 grid grid-cols-3 gap-2"><div class="bg-green-100 p-3 rounded-xl"><div class="text-sm">Total Collection Sept</div><b class="text-xl">₹ 2,40,000</b></div><div class="bg-red-200 p-3 rounded-xl"><div class="text-sm">Total Expense Sept 2024</div><b class="text-xl">₹ 1,50,000</b></div><div class="bg-blue-200 p-3 rounded-xl"><div class="text-sm">Net Profit Sept 2024</div><b class="text-xl">₹ 90,000</b></div><div class="md:col-span-3 bg-white p-2 rounded-xl mt-2"><table class="w-full text-xs"><tr class="bg-gray-200"><th>Date</th><th>Category</th><th>Amount</th><th>Status</th></tr><tr><td>05-Sep-2024</td><td>⚡ Electricity</td><td>₹ 8,000</td><td>Paid</td></tr><tr><td>01-Sep-2024</td><td>🎓 Teacher Salary</td><td>₹ 1,20,000</td><td>Paid</td></tr></table></div></div>
+</div>
 </div>
 
-<!-- Content -->
-<div class="flex-1 p-6">
-<!-- DASHBOARD -->
-<div id="dashboard" class="erp-section"><h2 class="text-2xl font-bold mb-4">Dashboard</h2><div class="grid grid-cols-3 gap-4"><div class="bg-white p-4 rounded shadow"><p>Total Students</p><h3 id="totalStudents" class="text-2xl font-bold">0</h3></div><div class="bg-white p-4 rounded shadow"><p>Fees Collected</p><h3 id="totalFees" class="text-2xl font-bold">₹0</h3></div><div class="bg-white p-4 rounded shadow"><p>Pending Fees</p><h3 id="pendingFees" class="text-2xl font-bold">₹0</h3></div></div></div>
-
-<!-- STUDENTS - CLASS WISE EXCEL UPLOAD -->
-<div id="students" class="erp-section hidden">
-<h2 class="text-2xl font-bold mb-4">Students - Class Wise Excel Upload</h2>
-<div class="bg-white p-4 rounded shadow mb-4">
-<select id="classSelect" class="p-2 border rounded"><option>Nursery</option><option>KG</option><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option></select>
-<input type="file" id="excelFile" accept=".xlsx,.xls" class="ml-2">
-<button onclick="uploadExcel()" class="bg-green-600 text-white px-4 py-2 rounded ml-2">Upload Excel</button>
-<a href="#" onclick="downloadSample()" class="text-blue-600 ml-4 underline">Download Sample Excel</a>
-</div>
-<table class="w-full bg-white rounded shadow"><thead><tr class="bg-gray-100"><th class="p-2">ID</th><th class="p-2">Name</th><th class="p-2">Class</th><th class="p-2">Fees Status</th></tr></thead><tbody id="studentTable"></tbody></table>
-</div>
-
-<!-- FEES -->
-<div id="fees" class="erp-section hidden"><h2 class="text-2xl font-bold mb-4">Fees Management</h2><div id="feesTable" class="bg-white p-4 rounded shadow"></div></div>
-
-<!-- ACCOUNTANT -->
-<div id="accountant" class="erp-section hidden">
-<h2 class="text-2xl font-bold mb-4">Accountant Panel - 8210654916</h2>
-<div class="bg-white p-4 rounded shadow">
-<p>✅ QR Auto Verify, Pending List, Profit/Loss = Fees - Expense</p>
-<div class="mt-4"><input id="expenseName" placeholder="Expense Name - Bijli" class="p-2 border rounded"><input id="expenseAmt" placeholder="Amount" type="number" class="p-2 border rounded ml-2"><button onclick="addExpense()" class="bg-blue-600 text-white px-3 py-2 rounded ml-2">Add Expense</button></div>
-<div id="expenseList" class="mt-4"></div>
-<div class="mt-4 font-bold">Profit: <span id="profit">₹0</span></div>
-</div>
+<!-- GPS -->
+<div id="a" class="hidden p-2">
+<div class="bg-blue-800 text-white p-3 rounded-full text-center font-bold">📍 Teacher Attendance - Only Inside School Campus - GPS + Geo-Fence 100m</div>
+<div class="grid md:grid-cols-2 gap-3 mt-3"><div class="bg-white p-3 rounded-xl"><b>School Campus - Geo-Fence Map</b><div class="bg-blue-100 h-64 rounded mt-2 flex items-center justify-center">🗺️ St Joseph's Campus - 100m Radius<br>Teacher Inside - 20m</div><div class="mt-2 border p-2 rounded">✅ Sunil Soren - Present • Inside Campus • 09:14 AM</div></div><div><div class="bg-green-500 text-white p-3 rounded-xl">✅ Inside Campus - Mark Attendance Allowed<br><button class="bg-green-700 w-full mt-2 p-2 rounded">Mark Attendance ✓</button></div><div class="bg-red-600 text-white p-3 rounded-xl mt-3">⚠️ Outside Campus - Cannot Mark Attendance - 450m away</div></div></div>
 </div>
 
 <!-- HOMEWORK -->
-<div id="homework" class="erp-section hidden"><h2 class="text-2xl font-bold mb-4">Homework - Class Wise</h2><div class="bg-white p-4 rounded shadow"><select id="hwClass" class="p-2 border rounded"><option>Class 5</option><option>Class 6</option></select><input id="hwText" placeholder="Homework Text" class="p-2 border rounded ml-2 w-1/2"><button onclick="addHW()" class="bg-blue-600 text-white px-3 py-2 rounded ml-2">Upload HW</button><div id="hwList" class="mt-4"></div></div></div>
-
-<div id="attendance" class="erp-section hidden"><h2 class="text-2xl font-bold">Attendance - Teacher can see only his class</h2><p class="mt-4">Teacher login with teacher1 will see only Class 5 students - GPS logic added</p></div>
-<div id="teachers" class="erp-section hidden"><h2 class="text-2xl font-bold">Teachers</h2><p>Teacher1 - Class 5 Incharge</p></div>
-</div>
-</div>
+<div id="h" class="hidden p-2">
+<div class="bg-[#0b2447] text-white p-3 rounded-xl flex justify-between"><b>🎓 EduPortal</b><span>Teacher Mode</span></div>
+<div class="grid md:grid-cols-2 gap-3 mt-3"><div class="bg-white p-3 rounded-xl"><b>Teacher Panel — Class 5 Upload Homework</b><select class="border w-full p-2 rounded mt-2"><option>Math</option></select><input value="Fractions" class="border w-full p-2 rounded mt-2"><input type="file" class="mt-2"><button class="bg-blue-800 text-white w-full mt-2 p-2 rounded">Upload Homework</button><div class="bg-yellow-100 p-2 mt-2 text-sm">✅ New HW Uploaded for Class 5 - 52 Students Notified</div></div><div class="bg-white p-3 rounded-xl"><b>Student Login View Class 5</b><div class="bg-blue-200 p-2 rounded mt-2"><b>Student: Aarav Kumar - Class 5</b></div><div class="bg-white border p-2 rounded mt-2"><b>Math Homework • Fractions</b><br><span class="text-xs bg-yellow-100 px-2">Due Tomorrow • 2024-10-10</span><p class="text-xs mt-2">Complete Exercise 5.2 — Q1 to Q10 on Fractions.</p><button class="bg-blue-800 text-white text-xs px-3 py-1 rounded mt-2">Download Homework PDF</button></div></div></div>
 </div>
 
 <script>
-let students = JSON.parse(localStorage.getItem('students')||'[]');
-let expenses = JSON.parse(localStorage.getItem('expenses')||'[]');
-let currentUser = null;
-let teacherClass = "";
-
-function login(){
- let u=document.getElementById('username').value;
- let p=document.getElementById('password').value;
- if((u==='AnilHansda123' && p==='AnilHansda123') || (u==='accountant' && p==='123') || (u==='teacher1' && p==='123')){
-  currentUser=u; if(u==='teacher1') teacherClass='Class 5';
-  document.getElementById('loginPage').classList.add('hidden');
-  document.getElementById('mainPage').classList.remove('hidden');
-  if(u==='teacher1'){ document.getElementById('adminOnly').style.display='none'; }
-  render();
- } else alert('Wrong - Use AnilHansda123 / AnilHansda123');
-}
-function logout(){ location.reload(); }
-function show(id){ document.querySelectorAll('.erp-section').forEach(s=>s.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); if(id==='students'||id==='fees') render(); }
-
-function uploadExcel(){
- let file=document.getElementById('excelFile').files[0];
- let cls=document.getElementById('classSelect').value;
- if(!file) return alert('Excel select karo');
- let reader=new FileReader();
- reader.onload=function(e){
-  let data=new Uint8Array(e.target.result);
-  let wb=XLSX.read(data,{type:'array'});
-  let sheet=wb.Sheets[wb.SheetNames[0]];
-  let rows=XLSX.utils.sheet_to_json(sheet);
-  rows.forEach((r,i)=>{
-   students.push({id:'SJS/'+cls.replace('Class ','')+'/'+(students.length+1), name:r.Name||r.name||'Student '+(i+1), class:cls, fees:r.Fees||'Pending'});
-  });
-  localStorage.setItem('students',JSON.stringify(students));
-  alert(rows.length+' students added in '+cls); render();
- };
- reader.readAsArrayBuffer(file);
-}
-function render(){
- let filtered = currentUser==='teacher1'? students.filter(s=>s.class===teacherClass) : students;
- document.getElementById('studentTable').innerHTML = filtered.map(s=>`<tr><td class="p-2 border">${s.id}</td><td class="p-2 border">${s.name}</td><td class="p-2 border">${s.class}</td><td class="p-2 border">${s.fees}</td></tr>`).join('');
- document.getElementById('totalStudents').innerText = filtered.length;
- // Fees table
- document.getElementById('feesTable').innerHTML = filtered.map(s=>`<div class="flex justify-between border-b p-2"><span>${s.id} - ${s.name} (${s.class})</span><span>${s.fees}</span></div>`).join('');
-}
-function downloadSample(){
- let ws=XLSX.utils.json_to_sheet([{Name:"Aman Kumar", Fees:"Pending"}, {Name:"Riya Kumari", Fees:"Paid"}]);
- let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Students"); XLSX.writeFile(wb,"Sample_Class5.xlsx");
-}
-function addExpense(){
- let n=document.getElementById('expenseName').value; let a=parseInt(document.getElementById('expenseAmt').value);
- if(!n||!a) return; expenses.push({name:n,amt:a}); localStorage.setItem('expenses',JSON.stringify(expenses)); renderExpense();
-}
-function renderExpense(){
- let totalExp=expenses.reduce((s,e)=>s+e.amt,0);
- document.getElementById('expenseList').innerHTML=expenses.map(e=>`<div>${e.name} - ₹${e.amt}</div>`).join('');
- document.getElementById('profit').innerText='₹'+(students.filter(s=>s.fees==='Paid').length*1000 - totalExp);
-}
-function addHW(){
- let c=document.getElementById('hwClass').value; let t=document.getElementById('hwText').value;
- let list=JSON.parse(localStorage.getItem('hw')||'[]'); list.push({class:c,text:t}); localStorage.setItem('hw',JSON.stringify(list));
- document.getElementById('hwList').innerHTML=list.map(h=>`<div class="border-b p-2">${h.class} - ${h.text}</div>`).join('');
-}
-renderExpense();
+function s(id){['r','f','e','a','h'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
 </script>
+<div class="bg-[#0b2447] text-yellow-200 text-center text-xs p-3 mt-4">© 2024 • Anil Hansda • 8210654916 • St Joseph's School Sahibganj • ERP v2.1</div>
 </body>
 </html>
